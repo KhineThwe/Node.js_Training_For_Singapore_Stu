@@ -14,13 +14,23 @@ app.get("/", (req, res) => {
 //callback fun has two arguments -> request and response
 
 app.get("/api/courses", (req, res) => {
-  res.send([1, 2, 3, 4]);
+  res.send(courses);
 });
 
 //for single course
 app.get("/api/course/:id", (req, res) => {
-  res.send(req.params.id);
-});
+    // Find the course by ID
+    var course = courses.find(c => c.id === parseInt(req.params.id));
+  
+    // If course not found, return 404
+    if (!course) {
+      return res.status(404).send('The course with the given ID was not found');
+    }
+  
+    // If course found, return the course
+    res.send(course);
+  });
+  
 
 app.get("/api/posts/:year/:month", (req, res) => {
     res.send(req.params);
@@ -35,7 +45,7 @@ app.get("/api/posts/:year/:month", (req, res) => {
 
 //Port
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port 3000 ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
 // app.post()
 
 // app.put()
