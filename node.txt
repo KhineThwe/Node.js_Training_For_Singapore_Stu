@@ -1,0 +1,10 @@
+mkdir foldername
+cd foldername
+npm init --yes
+npm i express
+
+
+for nodemon
+npm i -g nodemon
+to run with nodemon
+nodemon file.js
