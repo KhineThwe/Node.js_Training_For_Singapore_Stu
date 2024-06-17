@@ -42,6 +42,6 @@ router.delete("/:id",(req,res)=>{
 const users = [{name:"Kyle"},{name:"Shally"}]
 router.param("id",(req,res,next,id)=>{
     req.user = users[id]
-    next()
+    next()//continue to other function
 })
  module.exports = router
