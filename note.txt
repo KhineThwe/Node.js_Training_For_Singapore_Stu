@@ -4,7 +4,14 @@ npm init --yes
 npm i express
 
 
-for nodemon
+for nodemon -> 
 npm i -g nodemon
 to run with nodemon
 nodemon file.js
+
+For validation package -> 
+npm i joi
+
+For Template ->
+npm install ejs
+
