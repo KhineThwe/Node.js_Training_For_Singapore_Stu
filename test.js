@@ -13,6 +13,7 @@ const courses = [
     {id:3,name:'course3'}
 ]
 
+//CRUD start
 app.get("/",function(request,response){
     response.send("Hello");
 })
@@ -100,11 +101,19 @@ function validateCourse(course){
 app.delete("/api/courses/:id",(req,res)=>{
     //Lookup the course
     //If not existing,return 404
+    const course = courses.find(c=>c.id === parseInt( req.params.id));
+    if(!course){
+        return res.status(400).send("The course with the given ID was not found");
+    }
 
     //Delete***
+    const index = courses.indexOf(course);
+    courses.splice(index,1);
 
     //Return the course
+    res.send(course);
 })
+//CRUD end
 
 const port = 3000;
 app.listen(port,()=>{console.log(`Listening on port ${port}`)});
