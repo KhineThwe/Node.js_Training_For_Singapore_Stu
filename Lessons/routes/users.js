@@ -1,16 +1,29 @@
 const express = require("express");
 const router = express.Router();
+router.use(logger);
 
 router.get('/',(req,res)=>{
+    console.log(req.query.name);
     res.send("User List");
  })
  
- router.get('/now',(req,res)=>{
-     res.send("User New Form");
+ router.get('/new',(req,res)=>{
+    //  res.send("User New Form");
+    res.render("users/new",{firstName: "Test"})
  })
 
 router.post("/",(req,res)=>{
-    res.send("Create User");
+    // res.send("Create User");
+    const isValid = true;
+    if(isValid){
+        users.push({firstName:req.body.firstName});
+        res.redirect(`/users/${users.length-1}`)
+    }else{
+        console.log("Error");
+        res.render("users/new",{firstName:req.body.firstName})
+    }
+    console.log(req.body.firstName);
+    res.send("Hi");
 })
 
 //same1
@@ -38,6 +51,11 @@ router.delete("/:id",(req,res)=>{
 // }).delete("/:id",(req,res)=>{
 //     res.send(`Delete User With Id ${req.params.id}`)
 // })
+
+function logger(req,res,next){
+    console.log(req.originalUrl);
+    next();
+}
 
 const users = [{name:"Kyle"},{name:"Shally"}]
 router.param("id",(req,res,next,id)=>{

@@ -15,3 +15,9 @@ npm i joi
 For Template ->
 npm install ejs
 
+For mysql db -> 
+npm install --save mysql express
+
+For Db with sequelize ->
+npm i --save express sequelize cors mysql2
+
