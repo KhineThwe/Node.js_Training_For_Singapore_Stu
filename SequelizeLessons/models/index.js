@@ -8,7 +8,6 @@ const sequelize = new Sequelize(
     dbConfig.PASSWORD,{
         host: dbConfig.HOST,
         dialect:dbConfig.dialect,
-        operatorsAliases: false,
         pool:{
             max:dbConfig.pool.max,
             min:dbConfig.pool.min,
@@ -23,7 +22,15 @@ sequelize.authenticate()
     console.log('connected')
 })
 .catch(err=>{
-    console.log("Error"+error)
+    console.log("Error"+err)
 })
 
 const db = {}
+
+db.user_table = require("./userTable.js")(sequelize,DataTypes);
+
+sequelize.sync({alter:true})
+.then(()=>console.log("tables created"))
+.catch(()=>console.log("Error Occurring"));
+
+module.exports = db;

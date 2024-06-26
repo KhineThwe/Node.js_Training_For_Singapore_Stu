@@ -2,8 +2,12 @@ const express = require("express");
 const cors = require('cors');
 const app = express()
 
+require("dotenv").config();
+//userRouter 
+const userRouter = require("./router/userRouter");
+
 var corOptions = {
-    origin : 'https://localhost:3000'
+    origin : 'https://localhost:8000'//frontend address and port no
 }
 
 //middleware
@@ -13,12 +17,8 @@ app.use(express.json())
 
 app.use(express.urlencoded({extended:true}))
 
-
-//testing
-
-app.get("/",(req,res)=>{
-    res.json({message: 'hello from api'})
-})
+//with Router
+app.use("/user",userRouter);
 
 //port 
 const PORT = process.env.PORT || 3000
