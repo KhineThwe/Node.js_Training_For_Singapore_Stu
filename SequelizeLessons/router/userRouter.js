@@ -6,6 +6,10 @@ userRouter.get("/",(req,res)=>{
 })
 
 
-userRouter.post("/",userController.addNewUser);
+userRouter.post("/addUser",userController.addNewUser);
+userRouter.get("/getAllUser",userController.getAllUser);
+userRouter.get("/getUser/:id",userController.getUser);
+userRouter.put("/updateUser/:id",userController.updateUser);
+userRouter.delete("/deleteUser/:id",userController.deleteUser);
 
 module.exports = userRouter;

@@ -21,3 +21,12 @@ npm install --save mysql express
 For Db with sequelize ->
 npm i --save express sequelize cors mysql2
 
+For Cors->
+npm i cors
+
+For dotenv->
+npm i dotenv
+
+For router ->
+npm i router
+
