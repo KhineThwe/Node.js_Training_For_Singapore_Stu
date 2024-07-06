@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const userService = require("../service/userService");
+const user_table = db.user_table
 
 const addNewUser = async(req,res)=>{
     let data = {

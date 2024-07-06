@@ -29,6 +29,7 @@ const db = {}
 
 db.user_table = require("./userTable.js")(sequelize,DataTypes);
 
+
 sequelize.sync({alter:true})
 .then(()=>console.log("tables created"))
 .catch(()=>console.log("Error Occurring"));
