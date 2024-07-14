@@ -39,6 +39,9 @@
           <button type="button" id="save" class="btn btn-primary mt-3">
             Submit
           </button>
+          <button type="button" id="update" class="btn btn-warning mt-3 d-none">
+            Update
+          </button>
         </div>
       </div>
 
@@ -53,15 +56,7 @@
               <th scope="col">Delete</th>
             </tr>
           </thead>
-          <tbody id="tbody">
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Update Button</td>
-              <td>Delete Button</td>
-            </tr>
-          </tbody>
+          <tbody id="tbody"></tbody>
         </table>
       </div>
     </div>
@@ -99,13 +94,9 @@
               updateBtn.innerText = "Update";
               deleteBtn.innerText = "Delete";
 
-              updateBtn.addEventListener("click", () =>
-                console.log("User clicks UpdateBtn" + u.id)
-              );
+              updateBtn.addEventListener("click", () => getOneUser(u.id));
 
-              deleteBtn.addEventListener("click", () =>
-                console.log("User clicks DeleteBtn")
-              );
+              deleteBtn.addEventListener("click", () => deleteUser(u.id));
             });
           });
       }
@@ -116,7 +107,85 @@
       let first_name = document.querySelector("#fname");
       let last_name = document.querySelector("#lname");
       let save = document.querySelector("#save");
-      save.addEventListener("click", () => console.log("Clicking Save Button"));
+      let up = document.querySelector("#update");
+      let selectedId = 0;
+      save.addEventListener("click", saveUser);
+      up.addEventListener("click", updateUser);
+
+      //2024/07/14
+      function saveUser() {
+        fetch("http://localhost:8000/user/addUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first_name: first_name.value,
+            last_name: last_name.value,
+          }),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            getAllUser();
+            first_name.value = last_name.value = "";
+          });
+      }
+
+      function getOneUser(id) {
+        fetch("http://localhost:8000/user/getUser/" + id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            //
+            first_name.value = data.data.first_name;
+            last_name.value = data.data.last_name;
+            selectedId = data.data.id;
+            save.classList.add("d-none");
+            up.classList.remove("d-none");
+          });
+      }
+
+      function updateUser(id) {
+        fetch("http://localhost:8000/user/updateUser/" + id, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first_name: first_name.value,
+            last_name: last_name.value,
+          }),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            getAllUser();
+            first_name.value = last_name.value = "";
+            //main
+            update.classList.add("d-none");
+            save.classList.remove("d-none");
+          });
+      }
+
+      //for delete
+      function deleteUser(id) {
+        fetch("http://localhost:8000/user/deleteUser/" + id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            getAllUser();
+          });
+      }
     </script>
   </body>
 </html>
